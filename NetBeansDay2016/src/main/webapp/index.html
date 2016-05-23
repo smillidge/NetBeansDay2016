@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Hello SSE World!</h1>
+        
+        
+        
+        
+        
+    </body>
+</html>
+<script type="text/javascript">
+
+
+    if((typeof EventSource)==="undefined")
+                {
+                    $("#alertbox").css("display","");
+                }
+
+    var eventSource = new EventSource("netbeansday/sseexample");
+    eventSource.onopen = function (e) {
+        console.log("Waiting message..");
+    };
+    eventSource.onerror = function (e) {
+        console.log("Error");
+    };
+    /*
+    eventSource.addEventListener("feed",
+        function (e) {
+            console.log(e);
+            var feedTemplate = $("#feedTemplate").html();
+            var feeds = Mustache.render(feedTemplate, $.parseJSON(e.data));
+            $("#feeds").html(feeds);
+        });   */
+
+    eventSource.addEventListener('hello', function(e) {
+        console.log(e);
+    },false);
+
+
+</script>
