@@ -5,11 +5,11 @@
  */
 package fish.payara.examples.payara.netbeansday2016;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
-import javax.ejb.Stateless;
 import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.sse.EventOutput;
 import org.glassfish.jersey.media.sse.OutboundEvent;
 import org.glassfish.jersey.media.sse.SseBroadcaster;
-import org.glassfish.jersey.media.sse.SseFeature;
 
 /**
  *
@@ -33,7 +32,7 @@ public class SSEBean {
     private SseBroadcaster broadcaster;
     
     @GET
-    @Produces(SseFeature.SERVER_SENT_EVENTS)
+    @Produces("text/event-stream")
     public EventOutput getEvents() {
         EventOutput newOne = new EventOutput();
         this.broadcaster.add(newOne);
@@ -49,8 +48,8 @@ public class SSEBean {
             @Override
             public void run() {
                 OutboundEvent.Builder builder =  new OutboundEvent.Builder();
-                OutboundEvent event = builder.name("hello").mediaType(MediaType.TEXT_PLAIN_TYPE)
-                        .data(String.class,"Hello World")
+                OutboundEvent event = builder.name("time").mediaType(MediaType.TEXT_PLAIN_TYPE)
+                        .data(String.class,new Date().toString())
                         .build();
                 System.out.println("Broadcasting Events");
                 broadcaster.broadcast(event);
