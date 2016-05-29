@@ -28,7 +28,8 @@ import org.glassfish.jersey.media.sse.SseBroadcaster;
 public class SSEBean {
     
     @Resource(name="DefaultManagedScheduledExecutorService")
-    private ManagedScheduledExecutorService scheduledExecutor;    
+    private ManagedScheduledExecutorService scheduledExecutor;   
+    
     private SseBroadcaster broadcaster;
     
     @GET
